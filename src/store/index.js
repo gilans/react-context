@@ -9,7 +9,9 @@ class ContextStore extends Component{
    state={
       user:{},
       posts:[],
+      parameters:[],
       dispatch: async action => {
+   
         const response = await reducer(this.state, action)
         this.setState( response ) 
       }

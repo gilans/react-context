@@ -1,27 +1,44 @@
-import {ActionTypes} from './'
-import _orderBy from 'lodash/orderBy'
+import {combineReducers} from 'redux'
+import cargaStaffReducer from './cargaStaff/reducer'
+import otherReducer from './otherReducer'
 
-export default async (state, action) => {
-   console.log('Reducing:', action);
-   switch(action.type){
-      case ActionTypes.GET_USER:
-         const response = await fetch('https://swapi.co/api/people/11/?format=json')
-         const user = await response.json()
-         return {user}
-      
-      case ActionTypes.CHANGE_NAME:
-         return {user:{name:'Michael Jackson'}}
-      
-      case ActionTypes.ADD_POST:
-         return {posts: [...state.posts, {id:6, title:'Post 6'} ] } 
-      
-      case ActionTypes.GET_POSTS:
-         const responseFilms = await fetch('https://swapi.co/api/films/?format=json')
-         const films = await responseFilms.json()
+/*const combineReducer = reducer => {
+  return (state = {}, action) => {
+    let nextReducers = {}
+    Object.keys(reducer).map(key => {
+      nextReducers[key] = reducer[key](state, action)
+    })
+    console.log('combineReducers', nextReducers)
+    return nextReducers;
+  };
+}; */
 
-         return {posts: _orderBy(films.results, ['episode_id'], ['asc']) }
-      
-     default:
-       null
-   }
- }
+const reducers = {
+  cargaStaffReducer,
+  otherReducer
+}
+
+/* const combineReducer = reducers => {
+  const reducerKeys = Object.keys(reducers);
+console.log('reducerKeys',reducers);
+
+  return (state = {}, action)=> {
+
+    let nextState = state;
+
+    for (let i = 0; i < reducerKeys.length; i++) {
+      const key = reducerKeys[i];
+      const reducer = reducers[key];
+      const previousStateForKey = state[key];
+      const nextStateForKey = reducer(previousStateForKey, action);
+
+      nextState = { ...nextState, [key]: nextStateForKey };
+    }
+    console.log('NextState',nextState)
+    return nextState;
+  };
+}; */
+
+
+
+export default combineReducers(reducers)

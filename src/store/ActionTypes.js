@@ -1,6 +1,9 @@
-export default {
-   ADD_POST: 'ADD_POST',
-   CHANGE_NAME: 'CHANGE_NAME',
-   GET_USER: 'GET_USER',
-   GET_POSTS: 'GET_POSTS',
+import otherActions from './otherActions'
+import cargaStaffActions from './cargaStaff/actions'
+
+const ActionTypes = {
+   ...cargaStaffActions,
+   ...otherActions
 }
+
+export default ActionTypes
